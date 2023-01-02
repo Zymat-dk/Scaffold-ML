@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,android
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,android
 
+#Buildozer
+App/.buildozer
+
 ### Android ###
 # Gradle files
 .gradle/

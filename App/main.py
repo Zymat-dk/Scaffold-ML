@@ -1,18 +1,29 @@
+import kivy
 from kivy.app import App
-from kivy.uix.image import Image
+from kivy.uix.boxlayout import BoxLayout
+
+kivy.require("2.1.0")
 
 
-class MainApp(App):
+class Crazy(BoxLayout):
+    def __init__(self):
+        super(Crazy, self).__init__()
+
+    def do_something(self):
+        num = self.testlabel.text
+        try:
+            num = int(num)
+            num += 1
+            self.testlabel.text = str(num)
+        except ValueError:
+            self.testlabel.text = "1"
+
+
+class Test(App):
     def build(self):
-        img = Image(
-            source=R"C:\Users\danie\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\RoamingState\middle-machine-bg.jpg",
-            size_hint=(1, 0.5),
-            pos_hint={"center_x": 0.5, "center_y": 0.5},
-        )
-
-        return img
+        return Crazy()
 
 
 if __name__ == "__main__":
-    app = MainApp()
+    app = Test()
     app.run()

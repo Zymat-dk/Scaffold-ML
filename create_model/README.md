@@ -15,5 +15,20 @@ Be sure to be as precise as possible for the best trained model.
 ## Training 
 Follow the instructions in the Jupyter notebook. It can be installed on the local machine, but to avoid an annoying setup, Google Colab can also be used. 
 
+If it is wanted to train on the local machine, set up a virtual enviroment, by doing the following:
+
+```bash
+python -m venv venv
+
+source venv/bin/activate # Linux
+.\venv\Scripts\activate # Windows 
+
+python -m pip install --upgrade pip
+pip install ipykernel
+python -m ipykernel install --user --name=venv
+pip install jupyter
+```
+
+
 ## Usage in app
 To use the newly trained model, it can be uploaded to the apps object_detection folder: `<ML App>/object_detection/model.tflite`. Simply replace the existing model, with the new one, and complile the app again. 

@@ -2,7 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,android
 
 #Buildozer
-App/.buildozer
+#App/.buildozer
+.buildozer/
+
 
 ### Android ###
 # Gradle files

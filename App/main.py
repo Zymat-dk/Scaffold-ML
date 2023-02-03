@@ -1,11 +1,10 @@
-import kivy
-from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
+from kivymd.app import MDApp
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.label import MDLabel
+from kivymd.uix.button import MDRectangleFlatButton
 
-kivy.require("2.1.0")
 
-
-class Crazy(BoxLayout):
+class Crazy(MDBoxLayout):
     def __init__(self):
         super(Crazy, self).__init__()
 
@@ -19,7 +18,7 @@ class Crazy(BoxLayout):
             self.testlabel.text = "1"
 
 
-class Test(App):
+class Test(MDApp):
     def build(self):
         return Crazy()
 

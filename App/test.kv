@@ -1,3 +1,18 @@
+<DrawerClickableItem@MDNavigationDrawerItem>
+    focus_color: "#e7e4c0"
+    text_color: "#4a4939"
+    icon_color: "#4a4939"
+    ripple_color: "#c5bdd2"
+    selected_color: "#0c6c4d"
+
+
+<DrawerLabelItem@MDNavigationDrawerItem>
+    text_color: "#4a4939"
+    icon_color: "#4a4939"
+    focus_behavior: False
+    selected_color: "#4a4939"
+    _no_ripple_effect: True
+
 <Crazy>
     testlabel: testlabel
     MDScreen:
@@ -40,3 +55,49 @@
 
                 MDLabel:
                     text: 'LinkedIN'
+        MDNavigationLayout:
+
+
+        # Hamburger button + top bar
+        MDScreenManager:
+
+            MDScreen:
+
+                MDTopAppBar:
+
+                    pos_hint: {"top": 1}
+
+                    md_bg_color: "#e7e4c0"
+                    specific_text_color: "#4a4939"
+                    right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+        # Hamburger pop out menu
+        MDNavigationDrawer:
+            id: nav_drawer
+            radius: (16, 0, 0, 16)
+            anchor: "right"
+            MDNavigationDrawerMenu:
+                MDNavigationDrawerHeader:
+                    title: "Header title"
+                    title_color: "#4a4939"
+                    text: "Header text"
+                    spacing: "4dp"
+                    padding: "12dp", 0, 0, "56dp"
+
+                MDNavigationDrawerLabel:
+                    text: "Mail"
+
+                DrawerClickableItem:
+                    icon: "gmail"
+                    right_text: "+99"
+                    text_right_color: "#4a4939"
+                    text: "Inbox"
+
+                DrawerClickableItem:
+                    icon: "send"
+                    text: "Outbox"
+
+                MDNavigationDrawerDivider:
+
+                MDNavigationDrawerLabel:
+                    text: "Labels"

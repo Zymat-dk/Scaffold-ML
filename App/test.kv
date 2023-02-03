@@ -1,36 +1,32 @@
 <DrawerClickableItem@MDNavigationDrawerItem>
     focus_color: "#e7e4c0"
-    text_color: "#4a4939"
-    icon_color: "#4a4939"
+    text_color: "white"
+    icon_color: "white"
     ripple_color: "#c5bdd2"
     selected_color: "#0c6c4d"
 
 
-<DrawerLabelItem@MDNavigationDrawerItem>
-    text_color: "#4a4939"
-    icon_color: "#4a4939"
-    focus_behavior: False
-    selected_color: "#4a4939"
-    _no_ripple_effect: True
 
 <Crazy>
     testlabel: testlabel
     MDScreen:
         MDBottomNavigation:
-            #panel_color: "#eeeaea"
-            selected_color_background: "orange"
-            text_color_active: "lightgrey"
+            panel_color: "#0d47a1"
+            selected_color_background: "#5472d3"
+            text_color_active: "#ffffff"
+
+            use_text: False
 
             MDBottomNavigationItem:
-                name: 'screen 1'
-                text: 'Mail'
-                icon: 'gmail'
+                name: 'scaffold'
+
+                icon: 'ladder'
                 badge_icon: "numeric-10"
 
             MDBottomNavigationItem:
-                name: 'screen 2'
-                text: 'Twitter'
-                icon: 'twitter'
+                name: 'camera'
+
+                icon: 'camera'
                 badge_icon: "numeric-5"
 
                 MDBoxLayout:
@@ -49,9 +45,9 @@
                         on_press: root.do_something()
 
             MDBottomNavigationItem:
-                name: 'screen 3'
-                text: 'LinkedIN'
-                icon: 'linkedin'
+                name: 'settings'
+
+                icon: 'cog'
 
                 MDLabel:
                     text: 'LinkedIN'
@@ -67,8 +63,8 @@
 
                     pos_hint: {"top": 1}
 
-                    md_bg_color: "#e7e4c0"
-                    specific_text_color: "#4a4939"
+                    md_bg_color: "#0d47a1"
+                    specific_text_color: "white"
                     right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
 
         # Hamburger pop out menu

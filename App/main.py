@@ -20,6 +20,8 @@ class Crazy(MDBoxLayout):
 
 class Test(MDApp):
     def build(self):
+        self.theme_cls.material_style = "M3"
+        self.theme_cls.theme_style = "Dark"
         return Crazy()
 
 

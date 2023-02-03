@@ -1,14 +1,42 @@
 <Crazy>
     testlabel: testlabel
-    MDBoxLayout:
-        orientation: "vertical"
-        MDLabel:
-            id: testlabel
-            text: "Hello World"
-            font_size: 64
-            color: 0, 0, 1, 1
-        MDRectangleFlatButton:
-            text: "Click me"
-            font_size: 32
-            size: 200, 100
-            on_press: root.do_something()
+    MDScreen:
+        MDBottomNavigation:
+            #panel_color: "#eeeaea"
+            selected_color_background: "orange"
+            text_color_active: "lightgrey"
+
+            MDBottomNavigationItem:
+                name: 'screen 1'
+                text: 'Mail'
+                icon: 'gmail'
+                badge_icon: "numeric-10"
+
+            MDBottomNavigationItem:
+                name: 'screen 2'
+                text: 'Twitter'
+                icon: 'twitter'
+                badge_icon: "numeric-5"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        id: testlabel
+                        text: "Hello World"
+                        font_size: 64
+                        color: 0, 0, 1, 1
+
+                    MDRectangleFlatButton:
+
+                        text: "Click me"
+                        font_size: 32
+                        size: 200, 100
+                        on_press: root.do_something()
+
+            MDBottomNavigationItem:
+                name: 'screen 3'
+                text: 'LinkedIN'
+                icon: 'linkedin'
+
+                MDLabel:
+                    text: 'LinkedIN'

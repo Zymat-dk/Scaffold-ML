@@ -3,7 +3,9 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.bottomnavigation import MDBottomNavigation, MDBottomNavigationItem
+from kivy.lang import Builder
 
+Builder.load_file("main.kv")
 
 class Crazy(MDBoxLayout):
     def __init__(self):

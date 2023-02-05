@@ -7,13 +7,13 @@
             selected_color_background: "#0A2647" if app.theme_cls.theme_style == "Dark" else "93bfcf"
 
             MDBottomNavigationItem:
-                icon: 'icons/search.png' if app.theme_cls.theme_style == "Dark" else 'icons/search.png'
                 name: 'scaffold'
+                icon: 'icons/scaffold.png'
                 badge_icon: "numeric-10"
 
             MDBottomNavigationItem:
                 name: 'camera'
-                icon: 'SearchLight'
+                icon: 'icons/loup.png'
                 badge_icon: "numeric-5"
 
                 MDBoxLayout:
@@ -26,7 +26,7 @@
                                 icon_size: "32sp"
                                 pos_hint: {"top": 1, "right": 1}
                                 theme_icon_color: "Custom"
-                                text_color: "#4a4939"
+                                text_color: "#2C74B3"
                                 on_press: nav_drawer.set_state("open")
                     MDLabel:
                         id: testlabel
@@ -41,7 +41,7 @@
 
             MDBottomNavigationItem:
                 name: 'settings'
-                icon: 'cog'
+                icon: 'icons/settings.png'
                 MDLabel:
                     text: 'Insert settings'
                 MDSwitch:

@@ -9,7 +9,6 @@ from colors import COLORS
 Builder.load_file("main.kv")
 
 
-
 class Crazy(MDBoxLayout):
     def __init__(self):
         super(Crazy, self).__init__()
@@ -26,7 +25,6 @@ class Crazy(MDBoxLayout):
 
 class Test(MDApp):
     def build(self):
-
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.theme_style_switch_animation = True
         self.theme_cls.primary_palette = "Blue"
@@ -34,9 +32,7 @@ class Test(MDApp):
         self.theme_cls.primary_light_hue = "400"
         self.theme_cls.material_style = "M3"
 
-
         self.theme_cls.colors = COLORS
-
 
         return Crazy()
 

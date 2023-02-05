@@ -1,8 +1,10 @@
+from kivy.core.text import LabelBase
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.bottomnavigation import MDBottomNavigation, MDBottomNavigationItem
+from kivymd.font_definitions import theme_font_styles
 from kivy.lang import Builder
 from colors import COLORS
 
@@ -31,6 +33,19 @@ class Main(MDApp):
         self.theme_cls.material_style = "M3"
 
         self.theme_cls.colors = COLORS
+
+        LabelBase.register(
+            name="Oswald",
+            fn_regular="fonts/Oswald.ttf",
+        )
+
+        theme_font_styles.append('Oswald_H1')
+        self.theme_cls.font_styles["Oswald_H1"] = [
+            "Oswald",
+            48,
+            False,
+            0.15,
+        ]
 
         return MainWindow()
 

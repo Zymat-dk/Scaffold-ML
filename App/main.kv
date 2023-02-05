@@ -4,11 +4,19 @@
         MDBottomNavigation:
             use_text: False
             md_bg_color: app.theme_cls.primary_color
-            selected_color_background: "#0A2647" if app.theme_cls.theme_style == "Dark" else "93bfcf"
+            selected_color_background: "#0A2647" if app.theme_cls.theme_style == "Dark" else "#93bfcf"
 
             MDBottomNavigationItem:
                 name: 'scaffold'
                 icon: 'icons/scaffold.png'
+
+                MDLabel:
+                    text: 'Stilladsdele'
+                    halign: 'center'
+                    pos_hint: {'center_y': .9}
+                    theme_text_color: 'Custom'
+                    text_color: '#EEE9DA' if app.theme_cls.theme_style == "Dark" else '#2C74B3'
+                    font_style: "Oswald_H1"
 
 
             MDBottomNavigationItem:

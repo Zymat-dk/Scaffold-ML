@@ -6,12 +6,10 @@ from kivymd.uix.bottomnavigation import MDBottomNavigation, MDBottomNavigationIt
 from kivy.lang import Builder
 from colors import COLORS
 
-Builder.load_file("main.kv")
 
-
-class Crazy(MDBoxLayout):
+class MainWindow(MDBoxLayout):
     def __init__(self):
-        super(Crazy, self).__init__()
+        super(MainWindow, self).__init__()
 
     def do_something(self):
         num = self.testlabel.text
@@ -23,7 +21,7 @@ class Crazy(MDBoxLayout):
             self.testlabel.text = "1"
 
 
-class Test(MDApp):
+class Main(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.theme_style_switch_animation = True
@@ -34,7 +32,7 @@ class Test(MDApp):
 
         self.theme_cls.colors = COLORS
 
-        return Crazy()
+        return MainWindow()
 
     def theme_switch(self):
         self.theme_cls.theme_style = (
@@ -43,5 +41,5 @@ class Test(MDApp):
 
 
 if __name__ == "__main__":
-    app = Test()
+    app = Main()
     app.run()

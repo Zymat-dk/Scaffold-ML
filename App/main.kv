@@ -1,4 +1,4 @@
-<Crazy>
+<MainWindow>
     testlabel: testlabel
     MDScreen:
         MDBottomNavigation:
@@ -9,12 +9,12 @@
             MDBottomNavigationItem:
                 name: 'scaffold'
                 icon: 'icons/scaffold.png'
-                badge_icon: "numeric-10"
+
 
             MDBottomNavigationItem:
                 name: 'camera'
                 icon: 'icons/loup.png'
-                badge_icon: "numeric-5"
+
 
                 MDBoxLayout:
                     orientation: "vertical"
@@ -28,6 +28,8 @@
                                 theme_icon_color: "Custom"
                                 text_color: "#2C74B3"
                                 on_press: nav_drawer.set_state("open")
+
+
                     MDLabel:
                         id: testlabel
                         text: "Hello World"

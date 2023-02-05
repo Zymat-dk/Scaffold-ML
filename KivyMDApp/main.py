@@ -12,6 +12,7 @@ from colors import COLORS
 class MainWindow(MDBoxLayout):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.orientation = "vertical"
 
     def do_something(self):
         num = self.testlabel.text
@@ -33,6 +34,8 @@ class Main(MDApp):
         self.theme_cls.material_style = "M3"
 
         self.theme_cls.colors = COLORS
+
+
 
         LabelBase.register(
             name="Oswald",

@@ -4,12 +4,12 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRectangleFlatButton
 from kivymd.uix.bottomnavigation import MDBottomNavigation, MDBottomNavigationItem
 from kivy.lang import Builder
+from colors import COLORS
 
-Builder.load_file("main.kv")
 
-class Crazy(MDBoxLayout):
+class MainWindow(MDBoxLayout):
     def __init__(self):
-        super(Crazy, self).__init__()
+        super(MainWindow, self).__init__()
 
     def do_something(self):
         num = self.testlabel.text
@@ -21,13 +21,25 @@ class Crazy(MDBoxLayout):
             self.testlabel.text = "1"
 
 
-class Test(MDApp):
+class Main(MDApp):
     def build(self):
-        self.theme_cls.material_style = "M3"
         self.theme_cls.theme_style = "Dark"
-        return Crazy()
+        self.theme_cls.theme_style_switch_animation = True
+        self.theme_cls.primary_palette = "Blue"
+        self.theme_cls.primary_dark_hue = "300"
+        self.theme_cls.primary_light_hue = "400"
+        self.theme_cls.material_style = "M3"
+
+        self.theme_cls.colors = COLORS
+
+        return MainWindow()
+
+    def theme_switch(self):
+        self.theme_cls.theme_style = (
+            "Dark" if self.theme_cls.theme_style == "Light" else "Light"
+        )
 
 
 if __name__ == "__main__":
-    app = Test()
+    app = Main()
     app.run()

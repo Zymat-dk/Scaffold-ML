@@ -1,37 +1,37 @@
-<DrawerClickableItem@MDNavigationDrawerItem>
-    focus_color: "#e7e4c0"
-    text_color: "white"
-    icon_color: "white"
-    ripple_color: "#c5bdd2"
-    selected_color: "#0c6c4d"
-
-
-
 <Crazy>
     testlabel: testlabel
     MDScreen:
         MDBottomNavigation:
-            panel_color: "#292524"
-            selected_color_background: "#57534e"
             use_text: False
+            md_bg_color: app.theme_cls.primary_color
+            selected_color_background: "#0A2647" if app.theme_cls.theme_style == "Dark" else "93bfcf"
 
             MDBottomNavigationItem:
+                icon: 'icons/search.png' if app.theme_cls.theme_style == "Dark" else 'icons/search.png'
                 name: 'scaffold'
-                icon: 'ladder'
                 badge_icon: "numeric-10"
 
             MDBottomNavigationItem:
                 name: 'camera'
-                icon: 'camera'
+                icon: 'SearchLight'
                 badge_icon: "numeric-5"
 
                 MDBoxLayout:
                     orientation: "vertical"
+                    # Hamburger button
+                    MDScreenManager:
+                        MDScreen:
+                            MDIconButton:
+                                icon: "menu"
+                                icon_size: "32sp"
+                                pos_hint: {"top": 1, "right": 1}
+                                theme_icon_color: "Custom"
+                                text_color: "#4a4939"
+                                on_press: nav_drawer.set_state("open")
                     MDLabel:
                         id: testlabel
                         text: "Hello World"
                         font_size: 64
-                        color: 0, 0, 1, 1
 
                     MDRectangleFlatButton:
                         text: "Click me"
@@ -49,19 +49,6 @@
                     active: True
                     on_active: app.theme_switch()
                     widget_style: "ios"
-        MDNavigationLayout:
-
-
-        # Hamburger button + top bar
-        MDScreenManager:
-
-            MDScreen:
-                MDIconButton:
-                    icon: "menu"
-                    icon_size: "32sp"
-                    pos_hint: {"top": 1, "right": 1}
-                    theme_icon_color: "Secondary"
-                    on_press: nav_drawer.set_state("open")
 
         # Hamburger pop out menu
         MDNavigationDrawer:
@@ -79,14 +66,16 @@
                 MDNavigationDrawerLabel:
                     text: "Mail"
 
-                DrawerClickableItem:
+                MDNavigationDrawerItem:
                     icon: "gmail"
+                    theme_icon_color: "Secondary"
                     right_text: "+99"
                     text_right_color: "#4a4939"
                     text: "Inbox"
 
-                DrawerClickableItem:
+                MDNavigationDrawerItem:
                     icon: "send"
+                    theme_icon_color: "Primary"
                     text: "Outbox"
 
                 MDNavigationDrawerDivider:

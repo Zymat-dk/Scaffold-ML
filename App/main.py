@@ -28,7 +28,16 @@ class Test(MDApp):
     def build(self):
 
         self.theme_cls.theme_style = "Dark"
+        self.theme_cls.theme_style_switch_animation = True
+        self.theme_cls.primary_palette = "Blue"
+        self.theme_cls.primary_dark_hue = "300"
+        self.theme_cls.primary_light_hue = "400"
+        self.theme_cls.material_style = "M3"
+
+
         self.theme_cls.colors = COLORS
+
+
         return Crazy()
 
     def theme_switch(self):

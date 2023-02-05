@@ -44,6 +44,11 @@
                 icon: 'cog'
                 MDLabel:
                     text: 'Insert settings'
+                MDSwitch:
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    active: True
+                    on_active: app.theme_switch()
+                    widget_style: "ios"
         MDNavigationLayout:
 
 
@@ -51,14 +56,12 @@
         MDScreenManager:
 
             MDScreen:
-
-                MDTopAppBar:
-
-                    pos_hint: {"top": 1}
-
-                    md_bg_color: "#292524"
-                    specific_text_color: "white"
-                    right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+                MDIconButton:
+                    icon: "menu"
+                    icon_size: "32sp"
+                    pos_hint: {"top": 1, "right": 1}
+                    theme_icon_color: "Secondary"
+                    on_press: nav_drawer.set_state("open")
 
         # Hamburger pop out menu
         MDNavigationDrawer:

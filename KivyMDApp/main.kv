@@ -17,11 +17,17 @@
                     theme_text_color: 'Custom'
                     text_color: '#EEE9DA' if app.theme_cls.theme_style == "Dark" else '#2C74B3'
                     font_style: "Oswald_H1"
+                MDLabel:
+                    text: "Hjul"
+                    theme_text_color: "Custom"
+                    text_color: '#EEE9DA' if app.theme_cls.theme_style == "Dark" else '#2C74B3'
+                    font_style: "Oswald_H1"
 
 
             MDBottomNavigationItem:
                 name: 'camera'
                 icon: 'icons/loup.png'
+                size_hint: [100, 100]
 
 
                 MDBoxLayout:

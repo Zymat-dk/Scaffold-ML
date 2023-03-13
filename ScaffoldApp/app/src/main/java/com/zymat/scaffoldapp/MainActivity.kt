@@ -21,7 +21,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.core.widget.TintableCompoundButton
 import com.zymat.scaffoldapp.databinding.ActivityMainBinding
-import com.zymat.scaffoldapp.ml.SsdMobilenetV11Metadata1
+import com.zymat.scaffoldapp.ml.ScaffoldModel
 import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var imageView: ImageView
     lateinit var button: Button
     lateinit var bitmap: Bitmap
-    lateinit var model: SsdMobilenetV11Metadata1
+    lateinit var model: ScaffoldModel
     lateinit var labels: List<String>
     val imageProcessor =
         ImageProcessor.Builder().add(ResizeOp(300, 300, ResizeOp.ResizeMethod.BILINEAR)).build()
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         intent.setAction(Intent.ACTION_GET_CONTENT)
 
         labels = FileUtil.loadLabels(this, "labels.txt")
-        model = SsdMobilenetV11Metadata1.newInstance(this)
+        model = ScaffoldModel.newInstance(this)
         imageView = findViewById(R.id.imageV)
         button = findViewById(R.id.btn)
 
@@ -80,10 +80,16 @@ class MainActivity : AppCompatActivity() {
 
         // Runs model inference and gets result.
         val outputs = model.process(image)
-        val locations = outputs.locationsAsTensorBuffer.floatArray
-        val classes = outputs.classesAsTensorBuffer.floatArray
-        val scores = outputs.scoresAsTensorBuffer.floatArray
-        val numberOfDetections = outputs.numberOfDetectionsAsTensorBuffer.floatArray
+        val detectionResult = outputs.detectionResultList.get(0)
+// Gets result from DetectionResult.
+        val location = detectionResult.scoreAsFloat;
+        val category = detectionResult.locationAsRectF;
+        val score = detectionResult.categoryAsString;
+
+//        val locations = outputs.locationsAsTensorBuffer.floatArray
+//        val classes = outputs.classesAsTensorBuffer.floatArray
+//        val scores = outputs.scoresAsTensorBuffer.floatArray
+//        val numberOfDetections = outputs.numberOfDetectionsAsTensorBuffer.floatArray
 
         var mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true)
         val canvas = Canvas(mutable)
@@ -94,21 +100,21 @@ class MainActivity : AppCompatActivity() {
         paint.textSize = h/15f
         paint.strokeWidth = h/85f
         var x = 0
-        scores.forEachIndexed { index, fl ->
+        score.forEachIndexed { index, fl ->
             x = index
             x *= 4
-            if (fl > 0.5) {
+            if (true) {
                 paint.style = Paint.Style.STROKE
                 canvas.drawRect(
                     RectF(
-                        locations.get(x + 1) * w,
-                        locations.get(x) * h,
-                        locations.get(x + 3) * w,
-                        locations.get(x + 2) * h
+                        location * w,
+                        location * h,
+                        location * w,
+                        location * h
                     ), paint
                 )
                 paint.style = Paint.Style.FILL
-                canvas.drawText(labels.get(classes.get(index).toInt()) + " " + fl.toString(), locations.get(x+1)*w, locations.get(x)*h, paint)
+                canvas.drawText(labels.get(0) + " " + fl.toString(), location*w, location*h, paint)
             }
         }
         imageView.setImageBitmap(mutable)

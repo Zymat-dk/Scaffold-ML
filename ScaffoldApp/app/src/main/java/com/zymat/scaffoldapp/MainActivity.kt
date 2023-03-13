@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var button: Button
     lateinit var bitmap: Bitmap
     lateinit var model: SsdMobilenetV11Metadata1
-    var labels = FileUtil.loadLabels(this, "labels.txt")
+    lateinit var labels: List<String>
     val imageProcessor =
         ImageProcessor.Builder().add(ResizeOp(300, 300, ResizeOp.ResizeMethod.BILINEAR)).build()
 
@@ -49,9 +49,11 @@ class MainActivity : AppCompatActivity() {
         intent.setType("image/*")
         intent.setAction(Intent.ACTION_GET_CONTENT)
 
-        val model = SsdMobilenetV11Metadata1.newInstance(this)
+        labels = FileUtil.loadLabels(this, "labels.txt")
+        model = SsdMobilenetV11Metadata1.newInstance(this)
         imageView = findViewById(R.id.imageV)
         button = findViewById(R.id.btn)
+
         button.setOnClickListener {
             startActivityForResult(intent, 101)
         }
@@ -88,6 +90,9 @@ class MainActivity : AppCompatActivity() {
 
         val h = mutable.height
         val w = mutable.width
+
+        paint.textSize = h/15f
+        paint.strokeWidth = h/85f
         var x = 0
         scores.forEachIndexed { index, fl ->
             x = index
@@ -106,5 +111,6 @@ class MainActivity : AppCompatActivity() {
                 canvas.drawText(labels.get(classes.get(index).toInt()) + " " + fl.toString(), locations.get(x+1)*w, locations.get(x)*h, paint)
             }
         }
+        imageView.setImageBitmap(mutable)
     }
 }

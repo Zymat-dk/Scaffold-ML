@@ -80,44 +80,45 @@ class MainActivity : AppCompatActivity() {
 
         // Runs model inference and gets result.
         val outputs = model.process(image)
-        val detectionResult = outputs.detectionResultList.get(0)
-// Gets result from DetectionResult.
-        val location = detectionResult.locationAsRectF;
-        val category = detectionResult.categoryAsString;
-        val score = detectionResult.scoreAsFloat;
-        println("Result: ")
-        println(detectionResult)
-        println("Location: $location")
-        println("Score: $score")
-        println("Category: $category")
-
-//        val locations = outputs.locationsAsTensorBuffer.floatArray
-//        val classes = outputs.classesAsTensorBuffer.floatArray
-//        val scores = outputs.scoresAsTensorBuffer.floatArray
-//        val numberOfDetections = outputs.numberOfDetectionsAsTensorBuffer.floatArray
+        val detectionResults = outputs.detectionResultList
+        val detectionResult = detectionResults[0]
 
         var mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true)
         val canvas = Canvas(mutable)
-
         val w = mutable.width
         val h = mutable.height
+        val wScale = w / 300
+        val hScale = h / 300
 
-        val w_scale = w / 300
-        val h_scale = h / 300
-        println("Size: $w x $h")
+        for (result in detectionResults){
+            // Gets result from DetectionResult.
+            val location = result.locationAsRectF;
+            val category = result.categoryAsString;
+            val score = result.scoreAsFloat;
+            if (score < 0.5){
+                continue
+            }
+            println("Result: ")
+            println(detectionResult)
+            println("Location: $location")
+            println("Score: $score")
+            println("Category: $category")
+            println("Size: $w x $h")
 
-        paint.textSize = h/15f
-        paint.strokeWidth = h/85f
+            paint.textSize = h/15f
+            paint.strokeWidth = h/85f
 
-        paint.style = Paint.Style.STROKE
-        canvas.drawRect(
-            RectF(
-                location.left * w_scale,
-                location.top * h_scale,
-                location.right * w_scale,
-                location.bottom * h_scale
-            ), paint
-        )
+            paint.style = Paint.Style.STROKE
+            canvas.drawRect(
+                RectF(
+                    location.left * wScale,
+                    location.top * hScale,
+                    location.right * wScale,
+                    location.bottom * hScale
+                ), paint
+            )
+        }
+
         imageView.setImageBitmap(mutable)
 //        var x = 0
 //        score.forEachIndexed { index, fl ->

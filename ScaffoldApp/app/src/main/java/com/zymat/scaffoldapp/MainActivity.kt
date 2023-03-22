@@ -82,9 +82,14 @@ class MainActivity : AppCompatActivity() {
         val outputs = model.process(image)
         val detectionResult = outputs.detectionResultList.get(0)
 // Gets result from DetectionResult.
-        val location = detectionResult.scoreAsFloat;
-        val category = detectionResult.locationAsRectF;
-        val score = detectionResult.categoryAsString;
+        val location = detectionResult.locationAsRectF;
+        val category = detectionResult.categoryAsString;
+        val score = detectionResult.scoreAsFloat;
+        println("Result: ")
+        println(detectionResult)
+        println("Location: $location")
+        println("Score: $score")
+        println("Category: $category")
 
 //        val locations = outputs.locationsAsTensorBuffer.floatArray
 //        val classes = outputs.classesAsTensorBuffer.floatArray
@@ -94,29 +99,42 @@ class MainActivity : AppCompatActivity() {
         var mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true)
         val canvas = Canvas(mutable)
 
-        val h = mutable.height
         val w = mutable.width
+        val h = mutable.height
+
+        val w_scale = w / 300
+        val h_scale = h / 300
+        println("Size: $w x $h")
 
         paint.textSize = h/15f
         paint.strokeWidth = h/85f
-        var x = 0
-        score.forEachIndexed { index, fl ->
-            x = index
-            x *= 4
-            if (true) {
-                paint.style = Paint.Style.STROKE
-                canvas.drawRect(
-                    RectF(
-                        location * w,
-                        location * h,
-                        location * w,
-                        location * h
-                    ), paint
-                )
-                paint.style = Paint.Style.FILL
-                canvas.drawText(labels.get(0) + " " + fl.toString(), location*w, location*h, paint)
-            }
-        }
+
+        paint.style = Paint.Style.STROKE
+        canvas.drawRect(
+            RectF(
+                location.left * w_scale,
+                location.top * h_scale,
+                location.right * w_scale,
+                location.bottom * h_scale
+            ), paint
+        )
         imageView.setImageBitmap(mutable)
+//        var x = 0
+//        score.forEachIndexed { index, fl ->
+//            x = index
+//            x *= 4
+//            if (true) {
+//                canvas.drawRect(
+//                    RectF(
+//                        location * w,
+//                        location * h,
+//                        location * w,
+//                        location * h
+//                    ), paint
+//                )
+//                paint.style = Paint.Style.FILL
+//                canvas.drawText(labels.get(0) + " " + fl.toString(), location*w, location*h, paint)
+//            }
+//        }
     }
 }

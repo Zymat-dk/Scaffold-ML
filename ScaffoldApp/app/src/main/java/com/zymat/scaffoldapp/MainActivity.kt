@@ -6,20 +6,13 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Bundle
-import android.os.FileUtils
 import android.provider.MediaStore
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.TintableCompoundButton
+import androidx.navigation.ui.AppBarConfiguration
 import com.zymat.scaffoldapp.databinding.ActivityMainBinding
 import com.zymat.scaffoldapp.ml.ScaffoldModel
 import org.tensorflow.lite.support.common.FileUtil
@@ -29,14 +22,20 @@ import org.tensorflow.lite.support.image.ops.ResizeOp
 
 class MainActivity : AppCompatActivity() {
 
-    val paint = Paint()
     lateinit var imageView: ImageView
     lateinit var button: Button
     lateinit var bitmap: Bitmap
     lateinit var model: ScaffoldModel
     lateinit var labels: List<String>
-    val imageProcessor =
-        ImageProcessor.Builder().add(ResizeOp(300, 300, ResizeOp.ResizeMethod.BILINEAR)).build()
+    private val paint = Paint()
+    private val imageProcessor: ImageProcessor =
+        ImageProcessor.Builder().add(
+            ResizeOp(
+                300,
+                300,
+                ResizeOp.ResizeMethod.BILINEAR
+            )
+        ).build()
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 101) {
             var uri = data?.data
             bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-            get_predictions();
+            getPredictions();
         }
     }
 
@@ -73,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         model.close()  // Releases model resources if no longer used.
     }
 
-    fun get_predictions() {
+    private fun getPredictions() {
         // Creates inputs for reference.
         var image = TensorImage.fromBitmap(bitmap)
         image = imageProcessor.process(image)
@@ -90,24 +89,20 @@ class MainActivity : AppCompatActivity() {
         val wScale = w / 300
         val hScale = h / 300
 
-        for (result in detectionResults){
+        paint.textSize = h / 15f
+        paint.strokeWidth = h / 85f
+
+        val color = ContextCompat.getColor(this, R.color.sea)
+        paint.color = color
+
+        for (result in detectionResults) {
             // Gets result from DetectionResult.
             val location = result.locationAsRectF;
             val category = result.categoryAsString;
             val score = result.scoreAsFloat;
-            if (score < 0.5){
+            if (score < 0.4) {
                 continue
             }
-            println("Result: ")
-            println(detectionResult)
-            println("Location: $location")
-            println("Score: $score")
-            println("Category: $category")
-            println("Size: $w x $h")
-
-            paint.textSize = h/15f
-            paint.strokeWidth = h/85f
-
             paint.style = Paint.Style.STROKE
             canvas.drawRect(
                 RectF(
@@ -117,25 +112,14 @@ class MainActivity : AppCompatActivity() {
                     location.bottom * hScale
                 ), paint
             )
+            paint.style = Paint.Style.FILL
+            canvas.drawText(
+                category,
+                location.left * wScale,
+                location.left * hScale,
+                paint,
+            )
         }
-
         imageView.setImageBitmap(mutable)
-//        var x = 0
-//        score.forEachIndexed { index, fl ->
-//            x = index
-//            x *= 4
-//            if (true) {
-//                canvas.drawRect(
-//                    RectF(
-//                        location * w,
-//                        location * h,
-//                        location * w,
-//                        location * h
-//                    ), paint
-//                )
-//                paint.style = Paint.Style.FILL
-//                canvas.drawText(labels.get(0) + " " + fl.toString(), location*w, location*h, paint)
-//            }
-//        }
     }
 }

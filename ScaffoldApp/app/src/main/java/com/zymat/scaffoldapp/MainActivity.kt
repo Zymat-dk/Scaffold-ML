@@ -97,9 +97,10 @@ class MainActivity : AppCompatActivity() {
             val location = result.locationAsRectF;
             val category = result.categoryAsString;
             val score = result.scoreAsFloat;
-            if (score < 0.4) {
+            if (score < 0.88) {
                 continue
             }
+            println("Score: $score")
             paint.color = getRectColor(category)
             paint.style = Paint.Style.STROKE
             canvas.drawRect(

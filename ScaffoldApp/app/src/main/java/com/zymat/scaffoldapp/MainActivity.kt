@@ -19,6 +19,7 @@ import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
+import java.util.Locale.Category
 
 class MainActivity : AppCompatActivity() {
 
@@ -80,9 +81,8 @@ class MainActivity : AppCompatActivity() {
         // Runs model inference and gets result.
         val outputs = model.process(image)
         val detectionResults = outputs.detectionResultList
-        val detectionResult = detectionResults[0]
 
-        var mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        val mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true)
         val canvas = Canvas(mutable)
         val w = mutable.width
         val h = mutable.height
@@ -92,9 +92,6 @@ class MainActivity : AppCompatActivity() {
         paint.textSize = h / 15f
         paint.strokeWidth = h / 85f
 
-        val color = ContextCompat.getColor(this, R.color.sea)
-        paint.color = color
-
         for (result in detectionResults) {
             // Gets result from DetectionResult.
             val location = result.locationAsRectF;
@@ -103,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             if (score < 0.4) {
                 continue
             }
+            paint.color = getRectColor(category)
             paint.style = Paint.Style.STROKE
             canvas.drawRect(
                 RectF(
@@ -112,14 +110,14 @@ class MainActivity : AppCompatActivity() {
                     location.bottom * hScale
                 ), paint
             )
-            paint.style = Paint.Style.FILL
-            canvas.drawText(
-                category,
-                location.left * wScale,
-                location.left * hScale,
-                paint,
-            )
         }
         imageView.setImageBitmap(mutable)
+    }
+    private fun getRectColor(category: String): Int {
+        val color: Int = when (category){
+            "Hjul" -> R.color.sea
+            else -> R.color.white
+        }
+        return ContextCompat.getColor(this, color)
     }
 }

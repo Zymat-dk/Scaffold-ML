@@ -1,12 +1,20 @@
 package com.zymat.scaffoldapp
 
+import android.annotation.SuppressLint
+import android.content.AsyncQueryHandler
+import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
+import android.content.pm.PackageManager
+import android.graphics.*
+import android.hardware.camera2.CameraCaptureSession
+import android.hardware.camera2.CameraDevice
+import android.hardware.camera2.CameraManager
+import android.hardware.camera2.CaptureRequest
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.provider.MediaStore
+import android.view.TextureView
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -23,11 +31,21 @@ import java.util.Locale.Category
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var capReq: CaptureRequest.Builder
+    lateinit var handler: Handler
+    lateinit var handlerThread: HandlerThread
     lateinit var imageView: ImageView
     lateinit var button: Button
     lateinit var bitmap: Bitmap
     lateinit var model: ScaffoldModel
     lateinit var labels: List<String>
+
+    lateinit var cameraManager: CameraManager
+    lateinit var textureView: TextureView
+    lateinit var cameraCaptureSession: CameraCaptureSession
+    lateinit var cameraDevice: CameraDevice
+    lateinit var captureRequest: CaptureRequest
+
     private val paint = Paint()
     private val imageProcessor: ImageProcessor =
         ImageProcessor.Builder().add(
@@ -45,6 +63,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        getPermissions()
+
+        textureView = findViewById(R.id.imageV)
+        cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        handlerThread = HandlerThread("videoThread")
+        handlerThread.start()
+        handler = Handler((handlerThread).looper)
+
+        textureView.surfaceTextureListener = object: TextureView.SurfaceTextureListener{
+            override fun onSurfaceTextureAvailable(
+                p0: SurfaceTexture,
+                p1: Int,
+                p2: Int
+            ) {
+                openCamera()
+            }
+
+            override fun onSurfaceTextureSizeChanged(
+                p0: SurfaceTexture,
+                p1: Int,
+                p2: Int
+            ) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+                return false
+            }
+
+            override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
+
+            }
+        }
+
+
+
         val intent = Intent()
         intent.setType("image/*")
         intent.setAction(Intent.ACTION_GET_CONTENT)
@@ -56,6 +110,58 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             startActivityForResult(intent, 101)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun openCamera() {
+        cameraManager.openCamera(cameraManager.cameraIdList[0], object: CameraDevice.StateCallback(){
+            override fun onOpened(p0: CameraDevice) {
+                cameraDevice = p0
+
+                var capReq = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
+                capReq.addTarget()
+            }
+
+            override fun onDisconnected(camera: CameraDevice) {
+
+            }
+
+            override fun onError(camera: CameraDevice, error: Int) {
+
+            }
+        }, handler)
+    }
+
+    fun getPermissions(){
+        var permissionList = mutableListOf<String>()
+
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(android.Manifest.permission.CAMERA)
+        }
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+
+        if (permissionList.size > 0){
+            requestPermissions(permissionList.toTypedArray(),101)
+
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        grantResults.forEach {
+            if (it != PackageManager.PERMISSION_GRANTED){
+                getPermissions()
+            }
         }
     }
 

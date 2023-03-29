@@ -25,5 +25,14 @@
         android:text="Imagetid??"
         />
 
+    <Button
+        android:id="@+id/capture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="21dp"
+        android:backgroundTint="#FF0088"
+        android:text="capture??" />
+
 
 </RelativeLayout>

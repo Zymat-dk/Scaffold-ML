@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.provider.MediaStore
-import android.view.Surface
 import android.view.TextureView
 import android.widget.Button
 import android.widget.ImageView
@@ -120,21 +119,8 @@ class MainActivity : AppCompatActivity() {
             override fun onOpened(p0: CameraDevice) {
                 cameraDevice = p0
 
-                capReq = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
-                var surface = Surface(textureView.surfaceTexture)
-                capReq.addTarget(surface)
-
-                cameraDevice.createCaptureSession(listOf(surface), object: CameraCaptureSession.StateCallback(){
-                    override fun onConfigured(p0: CameraCaptureSession) {
-                        cameraCaptureSession = p0
-                        cameraCaptureSession.setRepeatingRequest(capReq.build(), null, null)
-                    }
-
-                    override fun onConfigureFailed(session: CameraCaptureSession) {
-                        TODO("Not yet implemented")
-                    }
-
-                }, handler)
+                var capReq = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
+                capReq.addTarget()
             }
 
             override fun onDisconnected(camera: CameraDevice) {

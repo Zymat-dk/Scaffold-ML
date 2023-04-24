@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -38,9 +39,6 @@ class MainActivity : AppCompatActivity() {
             )
         ).build()
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -54,16 +52,22 @@ class MainActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageV)
         button = findViewById(R.id.btn)
 
-        button.setOnClickListener {
-            startActivityForResult(intent, 101)
+//        button.setOnClickListener {
+//            startActivityForResult(intent, 123)
+//        }
+    }
+    fun takePhoto(view: View){
+        var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        if(intent.resolveActivity(packageManager) != null){
+            startActivityForResult(intent, 123)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 101) {
-            var uri = data?.data
-            bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+        if (requestCode == 123 && resultCode == RESULT_OK) {
+            bitmap = data?.extras?.get("data") as Bitmap
             getPredictions();
         }
     }

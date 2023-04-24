@@ -50,15 +50,9 @@ class MainActivity : AppCompatActivity() {
         labels = FileUtil.loadLabels(this, "labels.txt")
         model = ScaffoldModel.newInstance(this)
         imageView = findViewById(R.id.imageV)
-        button = findViewById(R.id.btn)
-
-//        button.setOnClickListener {
-//            startActivityForResult(intent, 123)
-//        }
     }
     fun takePhoto(view: View){
-        var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(intent.resolveActivity(packageManager) != null){
             startActivityForResult(intent, 123)
         }
@@ -68,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 123 && resultCode == RESULT_OK) {
             bitmap = data?.extras?.get("data") as Bitmap
+//            imageView.setImageBitmap(bitmap)
             getPredictions();
         }
     }

@@ -3,14 +3,13 @@ import pathlib
 import shutil
 import random
 
-#working_dir = pathlib.Path.home() # the home directory
-working_dir = os.getcwd()
+working_dir = os.getcwd() # Stien hvor scriptet køres fra
 src_dir = os.path.join(working_dir, 'raw_images') # ~/raw_images
-src_dir = pathlib.Path(src_dir) # convert the path into a Path object
-data_dir = os.path.join(working_dir, 'data')
+src_dir = pathlib.Path(src_dir) # konverter stien til at "path" objekt
+data_dir = os.path.join(working_dir, 'data') # Stien mad data
 
 
-folders = ["training", "validation", "testing"]
+folders = ["training", "validation", "testing"] 
 dirs = [os.path.join(data_dir, f) for f in folders]
 img_dirs = [os.path.join(d, "images") for d in dirs]
 annotation_dirs = [os.path.join(d, "annotations") for d in dirs]

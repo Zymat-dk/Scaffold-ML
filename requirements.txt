@@ -1,4 +1,0 @@
-black==23.1.0
-buildozer>=1.4.0
-kivy>=2.1.0
-kivymd>=1.1.1

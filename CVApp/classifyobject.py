@@ -31,7 +31,8 @@ class ClassifyObject(Preview):
             num_threads=4,
             score_threshold=0.5,
             max_results=3,
-            enable_edgetpu=False)
+            enable_edgetpu=False
+        )
         self.detector = ObjectDetector(model_path=model, options=options)
         # Get the required analyze resolution from the detector, a 2 ele list.
         # as a concequence, scale will be a 2 ele list

@@ -54,7 +54,7 @@ class ButtonsLayout(RelativeLayout):
 Builder.load_string("""
 <AppLayout>:
     detect: self.ids.preview
-    ClassifyObject:
+    Preview:
         letterbox_color: 'steelblue'
         id:preview
     ButtonsLayout:
@@ -63,13 +63,6 @@ Builder.load_string("""
 <ButtonsLayout>:
     normal:
     down:
-    Button:
-        id:other
-        on_press: root.select_camera('toggle')
-        height: self.width
-        width: self.height
-        background_normal: 'icons/camera-flip-outline.png'
-        background_down:   'icons/camera-flip-outline.png'
     Button:
         id:screen
         on_press: root.screenshot()

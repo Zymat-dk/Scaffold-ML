@@ -4,10 +4,3 @@
 <a href="https://github.com/Gustav2/Scaffold-ML/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/badge/license-MIT-green"></a>
 </p>
 An app to recognize scaffolding pieces and check if every piece is present.
-
-
-## Build app
-The apps can be build with buildozer. Remember to be in the same folder as the `buildozer.spec`
-```bash
-buildozer -v android debug
-```

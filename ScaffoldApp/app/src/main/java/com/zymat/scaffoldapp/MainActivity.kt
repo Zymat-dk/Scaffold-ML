@@ -7,25 +7,19 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.widget.TintableCompoundButton
-import androidx.navigation.ui.AppBarConfiguration
-import com.zymat.scaffoldapp.databinding.ActivityMainBinding
 import com.zymat.scaffoldapp.ml.ScaffoldModel
 import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
-import java.util.Locale.Category
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var button: ImageButton
     lateinit var imageView: ImageView
-    lateinit var button: ImageButton
     lateinit var bitmap: Bitmap
     lateinit var model: ScaffoldModel
     lateinit var labels: List<String>
@@ -39,22 +33,19 @@ class MainActivity : AppCompatActivity() {
             )
         ).build()
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val intent = Intent()
-        intent.setType("image/*")
-        intent.setAction(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
 
         labels = FileUtil.loadLabels(this, "labels.txt")
         model = ScaffoldModel.newInstance(this)
         imageView = findViewById(R.id.imageV)
-        button = findViewById(R.id.btn)
 
+        button = findViewById(R.id.btn)
         button.setOnClickListener {
             startActivityForResult(intent, 101)
         }

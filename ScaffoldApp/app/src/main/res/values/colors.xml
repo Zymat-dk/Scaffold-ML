@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#0088FF</color>
     <color name="sea">#00FF88</color>
+    <color name="deep_blue">#0A2647</color>
 </resources>

@@ -8,6 +8,7 @@ import android.graphics.RectF
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -24,7 +25,7 @@ import java.util.Locale.Category
 class MainActivity : AppCompatActivity() {
 
     lateinit var imageView: ImageView
-    lateinit var button: Button
+    lateinit var button: ImageButton
     lateinit var bitmap: Bitmap
     lateinit var model: ScaffoldModel
     lateinit var labels: List<String>

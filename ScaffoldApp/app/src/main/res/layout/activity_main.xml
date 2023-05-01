@@ -11,18 +11,18 @@
         android:id="@+id/imageV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#0088FF"
+        android:background="#0A2647"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/loop"
+        android:background="#0A2647"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="#FF0088"
-        android:text="Imagetid??"
         />
 
 

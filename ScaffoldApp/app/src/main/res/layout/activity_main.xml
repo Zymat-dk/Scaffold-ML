@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#0A2647"
+        android:contentDescription="Scaffold Image"
         />
 
     <ImageButton
@@ -23,6 +24,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
+        android:contentDescription="Search Image"
         />
 
 

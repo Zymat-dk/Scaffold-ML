@@ -37,4 +37,5 @@
 ## 24 & 25-04-2023
 * Finjusteringer af kodebasen
 
-
+## Indtil aflevering
+* Dokumentation af kode og rapportskrivning
